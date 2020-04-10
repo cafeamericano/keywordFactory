@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "build-for-ghpages": "ng build --prod --output-path docs --base-href /keywordFactory/",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
