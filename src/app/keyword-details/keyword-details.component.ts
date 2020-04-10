@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-keyword-details',
   template: `
-    <section class='center-content h-90'>
+    <section class='center-content h-90 animated fadeInDown'>
         <div class='card container p-2' style='width: 350px'>
 
             <div class="row">
