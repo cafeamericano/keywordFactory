@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import {ActivatedRoute} from '@angular/router';
 
@@ -8,24 +9,29 @@ import {ActivatedRoute} from '@angular/router';
     <section class='center-content h-90'>
         <div class='card container p-2' style='width: 350px'>
 
-            <div *ngIf=keywordInformation class="row">
-                <input
+            <div class="row">
+                <span *ngIf="keywordInformation; else elseBlock1">
+                    <input
                     value="{{keywordInformation.name}}" 
-                    id="first_name2" 
+                    id="keywordName" 
                     type="text" 
                     class="validate"
                 >
-                <label 
-                    class="active" 
-                    for="first_name2"
-                >
-                    Keyword Label
-                </label>
+                </span>
+                <ng-template #elseBlock1>
+                    <input
+                        value="" 
+                        placeholder="Keyword Name"
+                        id="keywordName" 
+                        type="text" 
+                        class="validate"
+                    >
+                </ng-template>
             </div>
 
             <div class="row">
                 <label>Keyword Type</label>
-                <select class="browser-default">
+                <select id='keywordSelectedType' class="browser-default">
                     <option value="" disabled selected>Select type</option>
                     <option 
                         *ngFor='let item of this.possibleKeywordTypes'
@@ -38,9 +44,14 @@ import {ActivatedRoute} from '@angular/router';
             </div>
 
             <div class="row" style="text-align: center">
-                <a class="m-1 waves-effect waves-light btn red lighten-2">Delete</a>
-                <a class="m-1 waves-effect waves-light btn blue-grey lighten-3">Cancel</a>
-                <a class="m-1 waves-effect waves-light btn">Submit</a>
+                <a *ngIf="keywordInformation" (click)="processDelete()" class="m-1 waves-effect waves-light btn red lighten-2">Delete</a>
+                <a (click)="processCancel()" class="m-1 waves-effect waves-light btn blue-grey lighten-3">Cancel</a>
+                <span *ngIf="keywordId; else elseBlock2">
+                    <a (click)="processUpdate()" class="m-1 waves-effect waves-light btn">Update</a>
+                </span>
+                <ng-template #elseBlock2>
+                    <a (click)="processCreate()" class="m-1 waves-effect waves-light btn">Add</a>
+                </ng-template>
             </div>
 
         </div>
@@ -54,7 +65,7 @@ export class KeywordDetailsComponent implements OnInit {
     keywordInformation: any;
     possibleKeywordTypes: any;
     
-    constructor(route: ActivatedRoute) { 
+    constructor(route: ActivatedRoute, private location: Location) { 
         route.params.subscribe(params => {
             console.log(params);
             this.keywordId = params.id;
@@ -66,18 +77,10 @@ export class KeywordDetailsComponent implements OnInit {
     }
     
     ngOnInit = () => {
-
         this.definePossibleKeywordTypes();
-
-        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
-        fetch(rootUrl + `/AppGalleryLite/api/keyword?id=` + this.keywordId)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                this.keywordInformation = data[0];
-                this.applyPreselectedType();
-            });
+        if (this.keywordId) {
+            this.processRead();
+        }
     }
 
     definePossibleKeywordTypes = () => {
@@ -97,6 +100,67 @@ export class KeywordDetailsComponent implements OnInit {
         if (this.keywordInformation && this.keywordInformation.type) {
             document.getElementById(this.keywordInformation.type).setAttribute('selected','')
         }
+    }
+
+    processRead() {
+        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
+        fetch(rootUrl + `/AppGalleryLite/api/keyword?id=` + this.keywordId)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                this.keywordInformation = data[0];
+                this.applyPreselectedType();
+            });
+    }
+
+    processCreate() {
+        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
+        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: (<HTMLInputElement>document.getElementById('keywordName')).value,
+                type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
+            })
+        }).then(response => {
+            this.location.back();
+        });
+    }
+
+    processUpdate() {
+        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
+        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        fetch(url, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                _id: this.keywordId,
+                name: (<HTMLInputElement>document.getElementById('keywordName')).value,
+                type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
+            })
+        }).then(response => {
+            this.location.back();
+        });
+    }
+
+    processDelete() {
+        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
+        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        fetch(url, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                _id: this.keywordId
+            })
+        }).then(response => {
+            this.location.back();
+        });
+    }
+
+    processCancel() {
+        this.location.back();
     }
 
 }
