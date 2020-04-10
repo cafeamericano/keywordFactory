@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-all-keywords',
-  template: `
-    <p>
-      all-keywords works!
-    </p>
-  `,
-  styles: []
+    selector: 'app-all-keywords',
+    template: `
+        <section class='container'>
+            <div class='row'>
+                <div class='col s12 m6 l4 xl3' ngclass='keywordObj' *ngFor='let item of allKeywordsArray'>
+                    <app-keyword-card [keywordObj]="item"></app-keyword-card>
+                </div>
+            </div>
+        </section>
+    `,
+    styles: []
 })
 
 export class AllKeywordsComponent implements OnInit {
