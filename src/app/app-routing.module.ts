@@ -6,7 +6,7 @@ import { KeywordDetailsComponent } from './keyword-details/keyword-details.compo
 
 const routes: Routes = [
     { path: 'allkeywords', component: AllKeywordsComponent},
-    { path: 'keyworddetails', component: KeywordDetailsComponent}
+    { path: 'allkeywords/keyworddetails/:id', component: KeywordDetailsComponent},
 ];
 
 @NgModule({
