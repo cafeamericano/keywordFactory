@@ -5,6 +5,7 @@ import { AllKeywordsComponent } from './all-keywords/all-keywords.component'
 import { KeywordDetailsComponent } from './keyword-details/keyword-details.component'
 
 const routes: Routes = [
+    { path: '', redirectTo: 'allkeywords', pathMatch: 'full'},
     { path: 'allkeywords', component: AllKeywordsComponent},
     { path: 'allkeywords/keyworddetails/:id', component: KeywordDetailsComponent},
     { path: 'addnew', component: KeywordDetailsComponent},
