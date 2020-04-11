@@ -153,7 +153,7 @@ export class AllKeywordsComponent implements OnInit {
 	}
 
   	ngOnInit = () => {
-        var rootUrl = 'https://central-api-go.appspot.com';
+        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
         fetch(rootUrl + `/AppGalleryLite/api/keywords`)
             .then((response) => {
                 return response.json();
