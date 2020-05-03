@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
     selector: 'app-keyword-card',
     template: `
-        <a routerLink='keyworddetails/{{keywordObj._id.$oid}}' routerLinkActive=''>
+        <a routerLink='keyworddetails/{{keywordObj._id}}' routerLinkActive=''>
             <div class='card' style="padding: 7px">
                 <strong>{{keywordObj.name}}</strong>
             </div>

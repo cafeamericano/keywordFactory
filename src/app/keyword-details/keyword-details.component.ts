@@ -43,6 +43,20 @@ import {ActivatedRoute} from '@angular/router';
                 </select>
             </div>
 
+            <div class="row">
+                <label>Active Status</label>
+                <select id='keywordIsActive' class="browser-default">
+                    <option value="" disabled selected>Select status</option>
+                    <option 
+                        *ngFor='let item of this.possibleActiveStatuses'
+                        id={{item.value}}
+                        value={{item.value}}
+                    >
+                        {{item.label}}
+                    </option>
+                </select>
+            </div>
+
             <div class="row" style="text-align: center">
                 <a *ngIf="keywordInformation" (click)="processDelete()" class="m-1 waves-effect waves-light btn red lighten-2">Delete</a>
                 <a (click)="processCancel()" class="m-1 waves-effect waves-light btn blue-grey lighten-3">Cancel</a>
@@ -64,7 +78,8 @@ export class KeywordDetailsComponent implements OnInit {
     keywordId: string;
     keywordInformation: any;
     possibleKeywordTypes: any;
-    
+    possibleActiveStatuses: any;
+
     constructor(route: ActivatedRoute, private location: Location) { 
         route.params.subscribe(params => {
             console.log(params);
@@ -78,9 +93,17 @@ export class KeywordDetailsComponent implements OnInit {
     
     ngOnInit = () => {
         this.definePossibleKeywordTypes();
+        this.definePossibleActiveStatuses();
         if (this.keywordId) {
             this.processRead();
         }
+    }
+
+    definePossibleActiveStatuses = () => {
+        this.possibleActiveStatuses = [
+            {label: "Active",                   value: "true"},
+            {label: "Inactive",                 value: "false"}
+        ]
     }
 
     definePossibleKeywordTypes = () => {
@@ -92,37 +115,46 @@ export class KeywordDetailsComponent implements OnInit {
             {label: "Database",                 value: 'database'},
             {label: "ORM",                      value: 'orm'},
             {label: "Deployment Technology",    value: 'deployment'},
+            {label: "Operating System",         value: 'operating-system'},
             {label: "Other",                    value: 'other'}
         ]
     }
 
-    applyPreselectedType = () => {
+    applyPreselectedKeywordType = () => {
         if (this.keywordInformation && this.keywordInformation.type) {
             document.getElementById(this.keywordInformation.type).setAttribute('selected','')
         }
     }
 
+    applyPreselectedActiveStatus = () => {
+        if (this.keywordInformation && this.keywordInformation.type) {
+            document.getElementById(this.keywordInformation.isActive).setAttribute('selected','')
+        }
+    }
+
     processRead() {
-        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
-        fetch(rootUrl + `/AppGalleryLite/api/keyword?id=` + this.keywordId)
+        var rootUrl = 'https://central-api-go.appspot.com';
+        fetch(rootUrl + `/KeywordFactory/api/keyword?id=` + this.keywordId)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
                 this.keywordInformation = data[0];
-                this.applyPreselectedType();
+                this.applyPreselectedKeywordType();
+                this.applyPreselectedActiveStatus();
             });
     }
 
     processCreate() {
-        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
-        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        var rootUrl = 'https://central-api-go.appspot.com';
+        var url = rootUrl + '/KeywordFactory/api/keyword'
         fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 name: (<HTMLInputElement>document.getElementById('keywordName')).value,
                 type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
+                isActive: (<HTMLInputElement>document.getElementById('keywordIsActive')).value == "true"
             })
         }).then(response => {
             this.location.back();
@@ -130,8 +162,8 @@ export class KeywordDetailsComponent implements OnInit {
     }
 
     processUpdate() {
-        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
-        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        var rootUrl = 'https://central-api-go.appspot.com';
+        var url = rootUrl + '/KeywordFactory/api/keyword'
         fetch(url, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -139,6 +171,7 @@ export class KeywordDetailsComponent implements OnInit {
                 _id: this.keywordId,
                 name: (<HTMLInputElement>document.getElementById('keywordName')).value,
                 type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
+                isActive: (<HTMLInputElement>document.getElementById('keywordIsActive')).value == "true"
             })
         }).then(response => {
             this.location.back();
@@ -146,8 +179,8 @@ export class KeywordDetailsComponent implements OnInit {
     }
 
     processDelete() {
-        var rootUrl = 'https://central-api-flask-cm6ud432ka-uc.a.run.app';
-        var url = rootUrl + '/AppGalleryLite/api/keywords'
+        var rootUrl = 'https://central-api-go.appspot.com';
+        var url = rootUrl + '/KeywordFactory/api/keyword'
         fetch(url, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
