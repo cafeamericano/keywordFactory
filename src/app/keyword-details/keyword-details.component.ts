@@ -44,12 +44,28 @@ import {ActivatedRoute} from '@angular/router';
             </div>
 
             <div class="row">
-                <label>Active Status</label>
-                <select id='keywordIsActive' class="browser-default">
+                <label>Show in App Gallery</label>
+                <select id='keywordShowInGallery' class="browser-default">
                     <option value="" disabled selected>Select status</option>
                     <option 
-                        *ngFor='let item of this.possibleActiveStatuses'
+                        *ngFor='let item of this.possibleDisplayStatuses'
                         id={{item.value}}
+                        class={{item.value}}
+                        value={{item.value}}
+                    >
+                        {{item.label}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="row">
+                <label>Show on Portfolio</label>
+                <select id='keywordShowOnPortfolio' class="browser-default">
+                    <option value="" disabled selected>Select status</option>
+                    <option 
+                        *ngFor='let item of this.possibleDisplayStatuses'
+                        id={{item.value}}
+                        class={{item.value}}
                         value={{item.value}}
                     >
                         {{item.label}}
@@ -78,7 +94,7 @@ export class KeywordDetailsComponent implements OnInit {
     keywordId: string;
     keywordInformation: any;
     possibleKeywordTypes: any;
-    possibleActiveStatuses: any;
+    possibleDisplayStatuses: any;
 
     constructor(route: ActivatedRoute, private location: Location) { 
         route.params.subscribe(params => {
@@ -93,16 +109,16 @@ export class KeywordDetailsComponent implements OnInit {
     
     ngOnInit = () => {
         this.definePossibleKeywordTypes();
-        this.definePossibleActiveStatuses();
+        this.definePossibleDisplayStatuses();
         if (this.keywordId) {
             this.processRead();
         }
     }
 
-    definePossibleActiveStatuses = () => {
-        this.possibleActiveStatuses = [
-            {label: "Active",                   value: "true"},
-            {label: "Inactive",                 value: "false"}
+    definePossibleDisplayStatuses = () => {
+        this.possibleDisplayStatuses = [
+            {label: "Show",                     value: "true"},
+            {label: "Hide",                     value: "false"}
         ]
     }
 
@@ -126,9 +142,12 @@ export class KeywordDetailsComponent implements OnInit {
         }
     }
 
-    applyPreselectedActiveStatus = () => {
-        if (this.keywordInformation && this.keywordInformation.type) {
-            document.getElementById(this.keywordInformation.isActive).setAttribute('selected','')
+    applyPreselectedDisplayStatus = () => {
+        if (this.keywordInformation) {
+            console.log(this.keywordInformation)
+            console.log(document.getElementById('keywordShowInGallery'))
+            document.getElementById('keywordShowInGallery').querySelector(`.${this.keywordInformation.showInGallery}`).setAttribute('selected','');
+            document.getElementById('keywordShowOnPortfolio').querySelector(`.${this.keywordInformation.showOnPortfolio}`).setAttribute('selected','');
         }
     }
 
@@ -141,7 +160,7 @@ export class KeywordDetailsComponent implements OnInit {
             .then((data) => {
                 this.keywordInformation = data[0];
                 this.applyPreselectedKeywordType();
-                this.applyPreselectedActiveStatus();
+                this.applyPreselectedDisplayStatus();
             });
     }
 
@@ -154,7 +173,9 @@ export class KeywordDetailsComponent implements OnInit {
             body: JSON.stringify({
                 name: (<HTMLInputElement>document.getElementById('keywordName')).value,
                 type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
-                isActive: (<HTMLInputElement>document.getElementById('keywordIsActive')).value == "true"
+                showInGallery: (<HTMLInputElement>document.getElementById('keywordShowInGallery')).value == "true",
+                showOnPortfolio: (<HTMLInputElement>document.getElementById('keywordShowOnPortfolio')).value == "true"
+
             })
         }).then(response => {
             this.location.back();
@@ -171,7 +192,9 @@ export class KeywordDetailsComponent implements OnInit {
                 _id: this.keywordId,
                 name: (<HTMLInputElement>document.getElementById('keywordName')).value,
                 type: (<HTMLInputElement>document.getElementById('keywordSelectedType')).value,
-                isActive: (<HTMLInputElement>document.getElementById('keywordIsActive')).value == "true"
+                showInGallery: (<HTMLInputElement>document.getElementById('keywordShowInGallery')).value == "true",
+                showOnPortfolio: (<HTMLInputElement>document.getElementById('keywordShowOnPortfolio')).value == "true"
+
             })
         }).then(response => {
             this.location.back();

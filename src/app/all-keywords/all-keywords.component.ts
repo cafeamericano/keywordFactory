@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-all-keywords',
     template: `
 
-        <div *ngIf="serverResponded; else loadingScreen" style="overflow: scroll; height: 100%">
+        <div *ngIf="serverResponded; else loadingScreen" style="overflow: scroll; height: 100%; padding-bottom: 5rem">
             <section class='container animated fadeInLeft'>
 
                 <br/>
@@ -18,14 +18,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'language'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -37,14 +37,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'library'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -56,14 +56,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'front-end-framework'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -75,14 +75,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'back-end-framework'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -94,14 +94,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'database'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -113,14 +113,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'orm'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -132,14 +132,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'deployment'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -151,14 +151,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'operating-system'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
@@ -170,14 +170,14 @@ import { Component, OnInit } from '@angular/core';
                         <div *ngFor='let item of allKeywordsArray'>
                             <div *ngIf="item.type == 'other'">
                                 <section class='col s6 m6 l4 xl3'>
-                                    <div *ngIf="item.isActive == true; else inactiveKeywordCard">
+                                    <!-- <div *ngIf="item.isActive == true; else inactiveKeywordCard"> -->
                                         <app-keyword-card [keywordObj]="item"></app-keyword-card>
-                                    </div>
+                                    <!-- </div> -->
                                 </section>
                             </div>
-                            <ng-template #inactiveKeywordCard>
+                            <!-- <ng-template #inactiveKeywordCard>
                                 <div style="opacity: 0.5"><app-keyword-card [keywordObj]="item"></app-keyword-card></div>
-                            </ng-template>
+                            </ng-template> -->
                         </div>
                     </div>
                 </div>
